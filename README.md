@@ -1,3 +1,21 @@
+
+# Getting Started
+
+### Reference Documentation:
+
+Run unit test, excluding Spring integration tests via -
+**mvn surefire:test**
+
+Run IT test via -
+**mvn failsafe:integration-test**
+
+It starts mongodb and mock-server to run IT test against.
+
+# The reason for this was a tech test for Lexis Nexis below is the requirement. All fulfilled.
+
+__________________
+
+
 ## Goal
 Create a company search application using Spring Boot 3.1.3 or higher.
 
