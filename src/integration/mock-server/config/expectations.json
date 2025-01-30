@@ -1,0 +1,32 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/Officers"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "{\n    \"etag\": \"cffabac57398072eab8130a896e54094b9aa3c25\",\n    \"links\": {\n        \"self\": \"/company/06500244/officers\"\n    },\n    \"kind\": \"officer-list\",\n    \"items_per_page\": 35,\n    \"items\": [\n        {\n            \"address\": {\n                \"premises\": \"5\",\n                \"postal_code\": \"SW20 0DP\",\n                \"country\": \"England\",\n                \"locality\": \"London\",\n                \"address_line_1\": \"Cranford Close\"\n            },\n            \"name\": \"BOXALL, Sarah Victoria\",\n            \"appointed_on\": \"2008-02-11\",\n            \"officer_role\": \"secretary\",\n            \"links\": {\n                \"officer\": {\n                    \"appointments\": \"/officers/t3kASKOIrQoe-k_JpPyJ7LYEAqE/appointments\"\n                }\n            },\n            \"occupation\": \"Hr Manager\",\n            \"nationality\": \"British\"\n        },\n        {\n            \"address\": {\n                \"premises\": \"5\",\n                \"postal_code\": \"SW20 0DP\",\n                \"country\": \"England\",\n                \"locality\": \"London\",\n                \"address_line_1\": \"Cranford Close\"\n            },\n            \"name\": \"BRAY, Simon Anton\",\n            \"appointed_on\": \"2008-02-11\",\n            \"officer_role\": \"director\",\n            \"links\": {\n                \"officer\": {\n                    \"appointments\": \"/officers/43iRdrOR91V6QdAb0PMDS3eEGg8/appointments\"\n                }\n            },\n            \"date_of_birth\": {\n                \"month\": 1,\n                \"year\": 1967\n            },\n            \"occupation\": \"Builder\",\n            \"country_of_residence\": \"England\",\n            \"nationality\": \"English\"\n        },\n        {\n            \"address\": {\n                \"postal_code\": \"M7 4AS\",\n                \"locality\": \"Manchester\",\n                \"address_line_1\": \"39a Leicester Road\",\n                \"address_line_2\": \"Salford\"\n            },\n            \"name\": \"FORM 10 SECRETARIES FD LTD\",\n            \"appointed_on\": \"2008-02-11\",\n            \"officer_role\": \"corporate-nominee-secretary\",\n            \"links\": {\n                \"officer\": {\n                    \"appointments\": \"/officers/Yg4rTn5QucYg_hJOxGTnx3B51WY/appointments\"\n                }\n            },\n            \"resigned_on\": \"2008-02-12\"\n        },\n        {\n            \"address\": {\n                \"postal_code\": \"M7 4AS\",\n                \"locality\": \"Manchester\",\n                \"address_line_1\": \"39a Leicester Road\",\n                \"address_line_2\": \"Salford\"\n            },\n            \"name\": \"FORM 10 DIRECTORS FD LTD\",\n            \"appointed_on\": \"2008-02-11\",\n            \"officer_role\": \"corporate-nominee-director\",\n            \"links\": {\n                \"officer\": {\n                    \"appointments\": \"/officers/aDjhOpnMaB_uAHDxRnMLWpa9C-I/appointments\"\n                }\n            },\n            \"resigned_on\": \"2008-02-12\"\n        }\n    ],\n    \"active_count\": 2,\n    \"total_results\": 4,\n    \"resigned_count\": 2\n}",
+      "statusCode": 200
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/Search"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "{\n    \"page_number\": 1,\n    \"kind\": \"search#companies\",\n    \"total_results\": 1,\n    \"items\": [\n        {\n            \"company_status\": \"active\",\n            \"address_snippet\": \"Boswell Cottage Main Street, North Leverton, Retford, England, DN22 0AD\",\n            \"date_of_creation\": \"2008-02-11\",\n            \"description\": \"06500244 - Incorporated on 11 February 2008\",\n            \"links\": {\n                \"self\": \"/company/06500244\"\n            },\n            \"company_number\": \"06500244\",\n            \"title\": \"BBC LIMITED\",\n            \"company_type\": \"ltd\",\n            \"address\": {\n                \"premises\": \"Boswell Cottage Main Street\",\n                \"postal_code\": \"DN22 0AD\",\n                \"country\": \"England\",\n                \"locality\": \"Retford\",\n                \"address_line_1\": \"North Leverton\"\n            },\n            \"kind\": \"searchresults#company\",\n            \"description_identifier\": [\n                \"incorporated-on\"\n            ]\n        }\n    ]\n}",
+      "statusCode": 200
+    }
+  }
+]
