@@ -51,8 +51,7 @@ class ProxyServiceTest {
             just(OfficeHolder
                 .builder()
                 .items(List.of(expectedOfficer))
-                .build())
-        );
+                .build()));
 
         final var actual = underTest.getCompany(just(QueryFields.builder().build())).block();
 

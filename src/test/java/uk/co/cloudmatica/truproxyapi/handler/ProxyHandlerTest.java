@@ -45,8 +45,6 @@ class ProxyHandlerTest {
             .create(underTest.proxy(serverRequestMock))
             .assertNext(serverResponse -> serverResponse.statusCode().is2xxSuccessful())
             .verifyComplete();
-
-        assertThat(proxyServiceMock);
     }
 
     @Test
