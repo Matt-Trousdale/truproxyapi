@@ -2,16 +2,16 @@ spring:
   main:
     web-application-type: reactive
   application:
-  name: truproxyapi
+    name: truproxyapi
   data:
     mongodb:
-      host:
-        port: 27017
+      port: 27017
       uri: mongodb://localhost:27017/truproxy
 #debug: true
 proxy:
-#  endpoint: "http://localhost:1080/"
-  endpoint: "https://exercise.trunarrative.cloud/TruProxyAPI/rest/Companies/v1/"
-  apiKey: ${API_KEY}
-  apiValue: ${API_KEY_VALUE}
+  endpoint: "http://localhost:1080"
+#  endpoint: "https://exercise.trunarrative.cloud/TruProxyAPI/rest/Companies/v1/"
+  #  apiKey: ${API_KEY}
+#  apiValue: ${API_KEY_VALUE}
+
 

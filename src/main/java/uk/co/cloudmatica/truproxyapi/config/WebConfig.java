@@ -32,8 +32,8 @@ public class WebConfig {
     private final String apiValue;
 
     public WebConfig(@Value("${proxy.endpoint}") final String proxyEndpoint,
-                     @Value("${proxy.apiKey}") final String apiKey,
-                     @Value("${proxy.apiValue}") final String apiValue) {
+                     @Value("${proxy.apiKey:mockapikey}") final String apiKey,
+                     @Value("${proxy.apiValue:mockapivalue}") final String apiValue) {
 
         this.proxyEndpoint = proxyEndpoint;
         this.apiKey = apiKey;

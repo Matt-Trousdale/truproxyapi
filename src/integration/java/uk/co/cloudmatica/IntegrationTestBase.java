@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.MongoDBContainer;
@@ -20,18 +20,18 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @EnableAutoConfiguration
 @ContextConfiguration(classes = {WebConfig.class, AppConfig.class})
 @AutoConfigureWebTestClient
-@Profile("test")
+@ActiveProfiles("test")
 public abstract class IntegrationTestBase {
 
     @Container
-    public static DockerComposeContainer dockerComposeContainer =
-        new DockerComposeContainer(new File("src/integration/mock-server/docker-compose.yml"))
+    public static DockerComposeContainer<?> dockerComposeContainer =
+        new DockerComposeContainer<>(new File("src/integration/mock-server/docker-compose.yml"))
             .withExposedService("mockServer", 1080);
 
     @ServiceConnection
     final static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.0.10");
 
-    public IntegrationTestBase() {
+    IntegrationTestBase() {
         dockerComposeContainer.start();
         mongoDBContainer.start();
     }

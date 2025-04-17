@@ -13,7 +13,6 @@ import uk.co.cloudmatica.truproxyapi.service.ProxyService;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.web.reactive.function.server.ServerResponse.notFound;

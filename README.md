@@ -13,6 +13,11 @@ It starts mongodb and mock-server to run IT test against.
 
 # The reason for this was a tech test for Lexis Nexis below is the requirement. All fulfilled.
 
+also to run the app without the tests would require Lexis API key/value this is private so
+I cannot publish it
+
+to just test it starts I have added mocks, that will not work with the proxy endpoint.
+Also you would need to run a local docker with the default port exposed.
 __________________
 
 
