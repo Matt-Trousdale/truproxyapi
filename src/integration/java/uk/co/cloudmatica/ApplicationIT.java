@@ -18,11 +18,7 @@ import java.time.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApplicationIT extends IntegrationTestBase {
-
-    @Autowired
-    private RouterFunction<ServerResponse> route;
-    @Autowired
-    private ProxyHandler proxyHandler;
+    
     @Autowired
     private WebTestClient webTestClient;
 
@@ -35,9 +31,6 @@ public class ApplicationIT extends IntegrationTestBase {
 
     @Test
     void whenIAskForAnExistingCompanyItsReturnedWithOfficersIncluded() {
-
-        CompanyDto companyDto = CompanyDto.builder().build();
-        Mono<CompanyDto> companyDtoMono = Mono.just(companyDto);
 
         webTestClient.post()
             .uri("/proxy")
