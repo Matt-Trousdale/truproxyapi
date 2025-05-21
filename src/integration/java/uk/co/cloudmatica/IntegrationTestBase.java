@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.containers.DockerComposeContainer;
+import org.testcontainers.containers.ComposeContainer;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import uk.co.cloudmatica.truproxyapi.config.AppConfig;
@@ -24,8 +24,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public abstract class IntegrationTestBase {
 
     @Container
-    public static DockerComposeContainer<?> dockerComposeContainer =
-        new DockerComposeContainer<>(new File("src/integration/mock-server/docker-compose.yml"))
+    public static ComposeContainer dockerComposeContainer =
+        new ComposeContainer(new File("src/integration/mock-server/docker-compose.yml"))
             .withExposedService("mockServer", 1080);
 
     @ServiceConnection
