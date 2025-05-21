@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import uk.co.cloudmatica.truproxyapi.dto.CompanyDto;
-import uk.co.cloudmatica.truproxyapi.handler.ProxyHandler;
 import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
 
 import java.time.Duration;

@@ -16,6 +16,7 @@ public class CompanyRepoRemote {
     private static final String COMPANY_RESOURCE = "/Search?";
     private static final String OFFICER_RESOURCE = "/Officers?";
     private static final String CUSTOMER_SEARCH = "CompanyNumber=";
+    private static final String QUERY_PREFIX = "Query=";
     private final String url;
     private final WebClient webClient;
 
@@ -41,7 +42,7 @@ public class CompanyRepoRemote {
     private Mono<String> buildCompUrl(final Mono<QueryFields> query) {
         return query.flatMap(companyNumber -> {
                 log.info(companyNumber.toString());
-                return just(url.concat(COMPANY_RESOURCE).concat("Query=").concat(companyNumber.getCompanyNumber()));
+                return just(url.concat(COMPANY_RESOURCE).concat(QUERY_PREFIX).concat(companyNumber.getCompanyNumber()));
             }
         );
     }
