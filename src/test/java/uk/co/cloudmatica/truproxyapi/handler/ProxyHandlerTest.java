@@ -30,8 +30,7 @@ class ProxyHandlerTest {
     @Test
     void givenInputTheHandleShouldReturnResponse() {
 
-        final var queryFiledsMono = just(QueryFields.builder()
-            .companyNumber("1234").build());
+        final var queryFiledsMono = just(QueryFields.builder().companyNumber("1234").build());
         final var companyMono = just(CompanyDto.builder().build());
 
         given(serverRequestMock.bodyToMono(QueryFields.class)).willReturn(queryFiledsMono);
