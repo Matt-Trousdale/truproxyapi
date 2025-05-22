@@ -27,7 +27,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static reactor.core.publisher.Mono.just;
 
-@SuppressWarnings("ALL")
 @ExtendWith(MockitoExtension.class)
 class CompanyRepoRemoteTest {
 
@@ -37,6 +36,7 @@ class CompanyRepoRemoteTest {
     private RequestBodyUriSpec requestBodyUriSpecMock;
     @Mock
     private RequestHeadersSpec<RequestBodySpec> requestHeadersSpecMock;
+    @SuppressWarnings("rawtypes")
     @Mock
     private RequestHeadersUriSpec requestHeadersUriSpecMock;
     private CompanyRepoRemote underTest;
@@ -47,6 +47,7 @@ class CompanyRepoRemoteTest {
         underTest = new CompanyRepoRemote("http://test", webClientMock);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     void findCompanies() {
 
