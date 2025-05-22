@@ -1,29 +1,21 @@
 package uk.co.cloudmatica.truproxyapi.handler;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.test.StepVerifier;
 import uk.co.cloudmatica.truproxyapi.dto.CompanyDto;
 import uk.co.cloudmatica.truproxyapi.service.ProxyService;
 
-import java.util.Optional;
-
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
-import static org.springframework.web.reactive.function.server.ServerResponse.seeOther;
-import static reactor.core.publisher.Mono.*;
+import static reactor.core.publisher.Mono.empty;
+import static reactor.core.publisher.Mono.just;
 
 @ExtendWith(MockitoExtension.class)
 class ProxyHandlerTest {
