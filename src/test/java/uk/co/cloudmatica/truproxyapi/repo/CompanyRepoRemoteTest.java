@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
 import org.springframework.web.reactive.function.client.WebClient.RequestBodyUriSpec;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
@@ -22,6 +23,7 @@ import java.util.function.Function;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static reactor.core.publisher.Mono.just;
@@ -34,7 +36,7 @@ class CompanyRepoRemoteTest {
     @Mock
     private RequestBodyUriSpec requestBodyUriSpecMock;
     @Mock
-    private RequestHeadersSpec requestHeadersSpecMock;
+    private RequestHeadersSpec<RequestBodySpec> requestHeadersSpecMock;
     @Mock
     private RequestHeadersUriSpec requestHeadersUriSpecMock;
     private CompanyRepoRemote underTest;
