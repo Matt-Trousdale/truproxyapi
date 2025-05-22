@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static reactor.core.publisher.Mono.just;
 
+@SuppressWarnings("ALL")
 @ExtendWith(MockitoExtension.class)
 class CompanyRepoRemoteTest {
 
