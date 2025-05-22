@@ -13,6 +13,7 @@ import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static reactor.core.publisher.Mono.empty;
 
 public class ApplicationIT extends IntegrationTestBase {
     
@@ -48,5 +49,18 @@ public class ApplicationIT extends IntegrationTestBase {
                 assertThat(response.getCompanies().getFirst().getOfficers().size()).isEqualTo(4);
             });
 
+    }
+
+    @Test
+    void whenMissingQueryFieldsThenNotFound() {
+
+        webTestClient.post()
+            .uri("/proxy")
+            .accept(MediaType.APPLICATION_JSON)
+            .body(BodyInserters.fromPublisher(empty(), QueryFields.class))
+            .exchange()
+            .expectStatus().isNotFound()
+            .expectBody(CompanyDto.class)
+            .value(response -> assertThat(response).isNull());
     }
 }
