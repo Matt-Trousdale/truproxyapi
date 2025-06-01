@@ -47,18 +47,15 @@ class CompanyRepoRemoteTest {
         underTest = new CompanyRepoRemote("http://test", webClientMock);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     void findCompanies() {
 
         final var queryFiledsMono = just(QueryFields.builder().companyNumber("1234").build());
         final var companyMono = just(CompanyHolder.builder().build());
 
-        when(webClientMock.get()).thenReturn(requestHeadersUriSpecMock);
-        when(requestHeadersUriSpecMock.uri(anyString())).thenReturn(requestHeadersSpecMock);
-        when(requestHeadersSpecMock.accept(APPLICATION_JSON)).thenReturn(requestBodyUriSpecMock);
+        setUpGenericMocks();
         when(requestBodyUriSpecMock.exchangeToMono(
-                ArgumentMatchers.<Function<ClientResponse, Mono<CompanyHolder>>>notNull())).thenReturn(companyMono);
+            ArgumentMatchers.<Function<ClientResponse, Mono<CompanyHolder>>>notNull())).thenReturn(companyMono);
 
         StepVerifier
                 .create(underTest.findCompanies(queryFiledsMono))
@@ -66,7 +63,6 @@ class CompanyRepoRemoteTest {
                 .verifyComplete();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     void findOfficers() {
 
@@ -75,11 +71,9 @@ class CompanyRepoRemoteTest {
         final var officeMono = just(OfficeHolder.builder()
                 .build());
 
-        when(webClientMock.get()).thenReturn(requestHeadersUriSpecMock);
-        when(requestHeadersUriSpecMock.uri(anyString())).thenReturn(requestHeadersSpecMock);
-        when(requestHeadersSpecMock.accept(APPLICATION_JSON)).thenReturn(requestBodyUriSpecMock);
+        setUpGenericMocks();
         when(requestBodyUriSpecMock.exchangeToMono(
-                ArgumentMatchers.<Function<ClientResponse, Mono<OfficeHolder>>>notNull())).thenReturn(officeMono);
+            ArgumentMatchers.<Function<ClientResponse, Mono<OfficeHolder>>>notNull())).thenReturn(officeMono);
 
         StepVerifier
                 .create(underTest.findOfficers(queryFiledsMono))
@@ -87,4 +81,10 @@ class CompanyRepoRemoteTest {
                 .verifyComplete();
     }
 
+    @SuppressWarnings("unchecked")
+    private void setUpGenericMocks() {
+        when(webClientMock.get()).thenReturn(requestHeadersUriSpecMock);
+        when(requestHeadersUriSpecMock.uri(anyString())).thenReturn(requestHeadersSpecMock);
+        when(requestHeadersSpecMock.accept(APPLICATION_JSON)).thenReturn(requestBodyUriSpecMock);
+    }
 }
