@@ -41,6 +41,8 @@ class CompanyRepoRemoteTest {
     private RequestHeadersUriSpec requestHeadersUriSpecMock;
     private CompanyRepoRemote underTest;
 
+    private final Mono<QueryFields> queryFiledsMono = just(QueryFields.builder().companyNumber("1234").build());
+
     @BeforeEach
     void setUp() {
 
@@ -50,7 +52,6 @@ class CompanyRepoRemoteTest {
     @Test
     void findCompanies() {
 
-        final var queryFiledsMono = just(QueryFields.builder().companyNumber("1234").build());
         final var companyMono = just(CompanyHolder.builder().build());
 
         setUpGenericMocks();
@@ -66,10 +67,7 @@ class CompanyRepoRemoteTest {
     @Test
     void findOfficers() {
 
-        final var queryFiledsMono = just(QueryFields.builder()
-                .companyNumber("1234").build());
-        final var officeMono = just(OfficeHolder.builder()
-                .build());
+        final var officeMono = just(OfficeHolder.builder().build());
 
         setUpGenericMocks();
         when(requestBodyUriSpecMock.exchangeToMono(
