@@ -12,8 +12,10 @@ import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
 
 import java.time.Duration;
 
+import static java.time.Duration.ofMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.core.publisher.Mono.empty;
+import static reactor.core.publisher.Mono.just;
 
 public class ApplicationIT extends IntegrationTestBase {
     
@@ -23,7 +25,7 @@ public class ApplicationIT extends IntegrationTestBase {
     @BeforeEach
     public void setUp() {
         webTestClient = webTestClient.mutate()
-            .responseTimeout(Duration.ofMillis(40000))
+            .responseTimeout(ofMillis(40000))
             .build();
     }
 
@@ -33,7 +35,7 @@ public class ApplicationIT extends IntegrationTestBase {
         webTestClient.post()
             .uri("/proxy")
             .accept(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromPublisher(Mono.just(QueryFields
+            .body(BodyInserters.fromPublisher(just(QueryFields
                 .builder()
                 .companyName("BBC LIMITED")
                 .companyNumber("06500244")
