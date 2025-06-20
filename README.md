@@ -11,9 +11,12 @@ Run IT test via -
 
 It starts mongodb and mock-server to run IT test against.
 
+If you want to run the app (non IT test) it needs mongodb to connect ot e.g. - ` docker start mongodb`
+
+
 # The reason for this was a tech test for Lexis Nexis below is the requirement. All fulfilled.
 
-also to run the app without the tests would require Lexis API key/value this is private so
+Also to run the app without the tests would require Lexis API key/value this is private so
 I cannot publish it. However please view the non-test application.yml and remove localhost
 and reinstate the other is in this:
 
