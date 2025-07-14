@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import reactor.core.publisher.Mono;
 import uk.co.cloudmatica.truproxyapi.dto.CompanyDto;
 import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
-
-import java.time.Duration;
 
 import static java.time.Duration.ofMillis;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,14 +51,14 @@ public class ApplicationIT extends IntegrationTestBase {
     }
 
     @Test
-    void whenMissingQueryFieldsThenNotFound() {
+    void whenMissingQueryFieldsThenBadRequestReturned() {
 
         webTestClient.post()
             .uri("/proxy")
             .accept(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromPublisher(empty(), QueryFields.class))
             .exchange()
-            .expectStatus().isNotFound()
+            .expectStatus().isBadRequest()
             .expectBody(CompanyDto.class)
             .value(response -> assertThat(response).isNull());
     }

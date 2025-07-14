@@ -1,18 +1,20 @@
 package uk.co.cloudmatica.truproxyapi.service;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import uk.co.cloudmatica.truproxyapi.dto.CompanyDto;
 import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
 import uk.co.cloudmatica.truproxyapi.repo.CompanyRepoRemote;
+import uk.co.cloudmatica.truproxyapi.repo.model.Company;
 import uk.co.cloudmatica.truproxyapi.repo.model.CompanyHolder;
 import uk.co.cloudmatica.truproxyapi.repo.model.OfficeHolder;
 
+import java.util.List;
 import java.util.function.Function;
 
-@Slf4j
+import static java.util.Optional.ofNullable;
+
 @AllArgsConstructor
 public class ProxyService {
 
@@ -28,7 +30,9 @@ public class ProxyService {
     private static Function<Tuple2<CompanyHolder, OfficeHolder>, CompanyDto> getSingleCompaniesWithOfficersEmbedded() {
 
         return z -> {
-            z.getT1().getCompanies().getFirst().setOfficers(z.getT2().getItems());
+            ofNullable(z.getT1().getCompanies())
+                .orElse(List.of(Company.builder().build())).getFirst()
+                .setOfficers(z.getT2().getItems());
             return CompanyDto.builder()
                 .totalResults(z.getT1().getTotalResults())
                 .companies(z.getT1().getCompanies()).companies(z.getT1().getCompanies()).build();

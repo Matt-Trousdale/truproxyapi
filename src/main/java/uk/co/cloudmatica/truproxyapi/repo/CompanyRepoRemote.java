@@ -1,16 +1,17 @@
 package uk.co.cloudmatica.truproxyapi.repo;
 
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
 import uk.co.cloudmatica.truproxyapi.repo.model.CompanyHolder;
 import uk.co.cloudmatica.truproxyapi.repo.model.OfficeHolder;
 
+import java.util.function.Function;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static reactor.core.publisher.Mono.just;
 
-@Slf4j
 public class CompanyRepoRemote {
 
     private static final String COMPANY_RESOURCE = "/Search?";
@@ -29,47 +30,28 @@ public class CompanyRepoRemote {
     public Mono<CompanyHolder> findCompanies(final Mono<QueryFields> query) {
 
         return query
-            .transform(this::buildCompUrl)
-            .transform(this::get);
+            .transform(s -> buildUrl(s, COMPANY_RESOURCE, QUERY_PREFIX))
+            .transform(s -> get(s, r -> r.bodyToMono(CompanyHolder.class)));
     }
 
     public Mono<OfficeHolder> findOfficers(final Mono<QueryFields> query) {
         return query
-            .transform(this::buildOfficerUrl)
-            .transform(this::getOffices);
+            .transform(s -> buildUrl(s , OFFICER_RESOURCE, CUSTOMER_SEARCH))
+            .transform(e -> get(e, r -> r.bodyToMono(OfficeHolder.class)));
     }
 
-    private Mono<String> buildCompUrl(final Mono<QueryFields> query) {
-        return query.flatMap(companyNumber -> {
-                log.info(companyNumber.toString());
-                return just(url.concat(COMPANY_RESOURCE).concat(QUERY_PREFIX).concat(companyNumber.getCompanyNumber()));
-            }
+    private Mono<String> buildUrl(final Mono<QueryFields> query, String resource, String nameOfIdField) {
+        return query.flatMap(companyNumber -> just(url.concat(resource)
+            .concat(nameOfIdField)
+            .concat(companyNumber.getCompanyNumber()))
         );
     }
 
-    private Mono<String> buildOfficerUrl(final Mono<QueryFields> query) {
-        return query.flatMap(companyNumber -> {
-                log.info(companyNumber.toString());
-                return just(url.concat(OFFICER_RESOURCE)
-                    .concat(CUSTOMER_SEARCH)
-                    .concat(companyNumber.getCompanyNumber()));
-            }
-        );
-    }
-
-    private Mono<OfficeHolder> getOffices(final Mono<String> urlMono) {
+    private <E> Mono<E> get(final Mono<String> urlMono, Function<ClientResponse, Mono<E>> function) {
         return urlMono.flatMap(url -> webClient
             .get()
             .uri(url)
             .accept(APPLICATION_JSON)
-            .exchangeToMono(e -> e.bodyToMono(OfficeHolder.class)));
-    }
-
-    private Mono<CompanyHolder> get(final Mono<String> urlMono) {
-        return urlMono.flatMap(url -> webClient
-            .get()
-            .uri(url)
-            .accept(APPLICATION_JSON)
-            .exchangeToMono(e -> e.bodyToMono(CompanyHolder.class)));
+            .exchangeToMono(function));
     }
 }

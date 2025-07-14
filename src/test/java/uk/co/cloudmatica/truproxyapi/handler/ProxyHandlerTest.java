@@ -13,9 +13,8 @@ import uk.co.cloudmatica.truproxyapi.service.ProxyService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static reactor.core.publisher.Mono.empty;
-import static reactor.core.publisher.Mono.just;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static reactor.core.publisher.Mono.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProxyHandlerTest {
@@ -50,7 +49,19 @@ class ProxyHandlerTest {
 
         StepVerifier
             .create(underTest.proxy(serverRequestMock))
-            .consumeNextWith(serverResponse -> assertEquals(NOT_FOUND, serverResponse.statusCode()))
+            .consumeNextWith(serverResponse -> assertEquals(BAD_REQUEST, serverResponse.statusCode()))
+            .verifyComplete();
+    }
+
+    @Test
+    void givenNullInputTheHandleShouldReturnResponse() {
+
+        given(serverRequestMock.bodyToMono(QueryFields.class)).willReturn(error(new RuntimeException("exception thrown")));
+        given(proxyServiceMock.getCompany(any())).willReturn(empty());
+
+        StepVerifier
+            .create(underTest.proxy(serverRequestMock))
+            .consumeNextWith(serverResponse -> assertEquals(BAD_REQUEST, serverResponse.statusCode()))
             .verifyComplete();
     }
 }

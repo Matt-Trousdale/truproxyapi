@@ -6,6 +6,9 @@
 Run unit test, excluding Spring integration tests via -
 **mvn surefire:test**
 
+also use the target/site/jacoco/index.html to check coverage as intellij built in not working with StepVerifier for 
+some reason
+
 Run IT test via -
 **mvn failsafe:integration-test**
 

@@ -25,6 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static reactor.core.publisher.Mono.empty;
 import static reactor.core.publisher.Mono.just;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,8 +41,9 @@ class CompanyRepoRemoteTest {
     @Mock
     private RequestHeadersUriSpec requestHeadersUriSpecMock;
     private CompanyRepoRemote underTest;
-
-    private final Mono<QueryFields> queryFiledsMono = just(QueryFields.builder().companyNumber("1234").build());
+   private final Mono<QueryFields> monoQueryFields = just(QueryFields.builder()
+       .companyNumber("1234")
+       .companyName("test").build());
 
     @BeforeEach
     void setUp() {
@@ -54,14 +56,23 @@ class CompanyRepoRemoteTest {
 
         final var companyMono = just(CompanyHolder.builder().build());
 
-        setUpGenericMocks();
+        setUpMocks();
+
         when(requestBodyUriSpecMock.exchangeToMono(
             ArgumentMatchers.<Function<ClientResponse, Mono<CompanyHolder>>>notNull())).thenReturn(companyMono);
 
         StepVerifier
-                .create(underTest.findCompanies(queryFiledsMono))
-                .assertNext(c -> assertThat(c, equalTo(companyMono.block())))
-                .verifyComplete();
+            .create(underTest.findCompanies(monoQueryFields))
+            .assertNext(c -> assertThat(c, equalTo(companyMono.block())))
+            .verifyComplete();
+    }
+
+    @Test
+    void findCompaniesWithEmptyQuery() {
+
+        StepVerifier
+            .create(underTest.findCompanies(empty()))
+            .verifyComplete();
     }
 
     @Test
@@ -69,18 +80,26 @@ class CompanyRepoRemoteTest {
 
         final var officeMono = just(OfficeHolder.builder().build());
 
-        setUpGenericMocks();
+        setUpMocks();
         when(requestBodyUriSpecMock.exchangeToMono(
             ArgumentMatchers.<Function<ClientResponse, Mono<OfficeHolder>>>notNull())).thenReturn(officeMono);
 
         StepVerifier
-                .create(underTest.findOfficers(queryFiledsMono))
-                .assertNext(c -> assertThat(c, equalTo(officeMono.block())))
+                .create(underTest.findOfficers(monoQueryFields))
+                .assertNext(o -> assertThat(o, equalTo(officeMono.block())))
                 .verifyComplete();
     }
 
+    @Test
+    void findOfficersWithEmptyQuery() {
+
+        StepVerifier
+            .create(underTest.findCompanies(empty()))
+            .verifyComplete();
+    }
+
     @SuppressWarnings("unchecked")
-    private void setUpGenericMocks() {
+    private void setUpMocks() {
         when(webClientMock.get()).thenReturn(requestHeadersUriSpecMock);
         when(requestHeadersUriSpecMock.uri(anyString())).thenReturn(requestHeadersSpecMock);
         when(requestHeadersSpecMock.accept(APPLICATION_JSON)).thenReturn(requestBodyUriSpecMock);

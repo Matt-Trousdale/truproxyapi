@@ -1,10 +1,12 @@
 package uk.co.cloudmatica.truproxyapi.service;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.test.StepVerifier;
 import uk.co.cloudmatica.truproxyapi.handler.QueryFields;
 import uk.co.cloudmatica.truproxyapi.repo.CompanyRepoRemote;
 import uk.co.cloudmatica.truproxyapi.repo.model.Company;
@@ -15,6 +17,8 @@ import uk.co.cloudmatica.truproxyapi.repo.model.Officer;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static reactor.core.publisher.Mono.just;
@@ -66,5 +70,26 @@ class ProxyServiceTest {
         assertThat(actual.getCompanies().getFirst().getOfficers().getFirst())
             .usingRecursiveComparison().isEqualTo(expectedOfficer);
 
+    }
+
+    @Test
+    void whenNoCompanyIsReturnedItReturnsEmptyList() {
+
+        final var companyHolder = CompanyHolder
+            .builder()
+            .build();
+
+        given(companyRepoRemoteMock.findCompanies(any())).willReturn(just(companyHolder));
+
+        given(companyRepoRemoteMock.findOfficers(any())).willReturn(
+            just(OfficeHolder
+                .builder()
+                .items(List.of())
+                .build()));
+
+        StepVerifier
+            .create(underTest.getCompany(just(QueryFields.builder().build())))
+            .assertNext(c -> MatcherAssert.assertThat(c.getCompanies(), is(nullValue())))
+            .verifyComplete();
     }
 }

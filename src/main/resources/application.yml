@@ -9,7 +9,7 @@ spring:
       uri: mongodb://localhost:27017/truproxy
 #debug: true
 proxy:
-  endpoint: "http://localhost:1080"
+  endpoint: "http://localhost:8080"
 #  endpoint: "https://exercise.trunarrative.cloud/TruProxyAPI/rest/Companies/v1/"
   #  apiKey: ${API_KEY}
 #  apiValue: ${API_KEY_VALUE}
