@@ -27,7 +27,7 @@ public class ProxyService {
             .map(getSingleCompaniesWithOfficersEmbedded());
     }
 
-    private static Function<Tuple2<CompanyHolder, OfficeHolder>, CompanyDto> getSingleCompaniesWithOfficersEmbedded() {
+    private Function<Tuple2<CompanyHolder, OfficeHolder>, CompanyDto> getSingleCompaniesWithOfficersEmbedded() {
 
         return z -> {
             ofNullable(z.getT1().getCompanies())

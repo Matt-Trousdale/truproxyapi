@@ -31,7 +31,6 @@ public class ProxyHandler {
     }
 
     private Mono<ServerResponse> serverResponse(final Mono<CompanyDto> companyDtoMono) {
-        return companyDtoMono.flatMap(appResponse ->
-            ok().body(just(appResponse), CompanyDto.class));
+        return companyDtoMono.flatMap(appResponse -> ok().body(just(appResponse), CompanyDto.class));
     }
 }
